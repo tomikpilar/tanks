@@ -1,0 +1,7 @@
+*.ini
+
+out/
+node_modules/
+bower_components/
+.idea
+.gradle
