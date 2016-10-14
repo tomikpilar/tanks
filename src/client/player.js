@@ -1,13 +1,16 @@
-import {Tank} from "../core/items/tank";
+import {Tank, TANK_SHOT} from "../core/items/tank";
 import {KeyboardManager, KeyCode} from "./api/keyboardManager";
+import {PubSub} from "../core/pubsub";
 
 export class Player {
   //_tank;
   //_keyManager
+  //_pubSub
 
   constructor() {
     this._tank = new Tank();
     this._keyboardManager = KeyboardManager.getInstance();
+    this._pubSub = PubSub.getInstance();
   }
 
   update() {
@@ -29,6 +32,7 @@ export class Player {
 
     if(this._keyboardManager.isKeyPressed(KeyCode.CTRL)) {
       let ammo = this._tank.shoot();
+      this._pubSub.publish(TANK_SHOT, ammo);
     }
   }
 

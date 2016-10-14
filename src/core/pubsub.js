@@ -18,6 +18,18 @@ export class PubSub {
     this._handlers[topic].push(handler);
   }
 
+  unsubscribe(topic, handler) {
+    if(!this._handlers[topic]) return;
+
+    let len = this._handlers[topic];
+    for(let i = 0; i < len; i++) {
+      if(this._handlers[topic][i] === handler) {
+        this._handlers[topic].splice(i, 1);
+        return;
+      }
+    }
+  }
+
   publish(topic, data) {
     if(!this._handlers[topic]) return;
 
@@ -26,7 +38,3 @@ export class PubSub {
     });
   }
 }
-
-export const PubSubTopic = Object.freeze({
-
-});

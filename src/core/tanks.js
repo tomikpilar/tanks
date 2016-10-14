@@ -1,9 +1,11 @@
 import {TerrainGenerator} from "./terrain/terrainGenerator"
 import {Vector} from "./math/vector"
+import {PubSub} from "./pubsub"
 
 export class Tanks {
-  //_items;
+  //_items
   //_terrain
+  //_pubSub
 
   constructor(playerCount) {
     this._items = [];

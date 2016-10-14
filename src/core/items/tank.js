@@ -32,3 +32,5 @@ export class Tank extends MovingItem {
   set weight(weight) { this._weight = weight; }
   get weight() { return this._weight; }
 }
+
+export const TANK_SHOT = "tank_shot";
