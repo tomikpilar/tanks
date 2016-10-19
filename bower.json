@@ -1,0 +1,13 @@
+{
+  "name": "Tanks_by_Tomik",
+  "description": "Game based on tuneller",
+  "main": "out/static/index.html",
+  "authors": [
+    "Tomik"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/tomikpilar/tanks",
+  "devDependencies": {
+    "almond": "^0.3.3"
+  }
+}
