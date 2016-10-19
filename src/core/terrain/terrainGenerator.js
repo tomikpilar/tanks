@@ -21,8 +21,8 @@ export class TerrainGenerator {
   generate() {
     var terrainData = [];
 
-    for(let i = 0; i < this._size.x; i++) {
-      terrainData.push(Array(this._size.y).fill(TerrainType.ROCKS))
+    for(let i = 0; i < this._size.y; i++) {
+      terrainData.push(Array(this._size.x).fill(TerrainType.ROCKS))
     }
 
     //this.fillData(terrainData, 0, 0, this._size.x, this._size.y, TerrainType.ROCKS);
@@ -45,8 +45,8 @@ export class TerrainGenerator {
   }
 
   fillData(terrainData, start_x, start_y, end_x, end_y, type) {
-    for(var i = start_x; i < end_x; i++) {
-      for(var j = start_y; j < end_y; j++) {
+    for(var i = start_y; i < end_y; i++) {
+      for(var j = start_x; j < end_x; j++) {
         terrainData[i][j] = type;
       }
     }

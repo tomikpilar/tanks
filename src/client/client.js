@@ -37,6 +37,8 @@ class Client {
     var self = this;
 
     this._pubSub.subscribe(TANK_SHOT, function (ammo) {
+      console.log("shooting");
+      if(ammo == null) return;
       self._core.addItem(ammo);
       self._renderer.addToRender(ammo);
     });

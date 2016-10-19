@@ -14,6 +14,8 @@ export class Renderer {
   //_imageLoader;
   //_width
   //_height
+  //_halfWidth
+  //_halfHeight
   //_positionReferrer
   //_terrain
 
@@ -21,6 +23,8 @@ export class Renderer {
     this._context = canvas.getContext("2d");
     this._width = canvas.width;
     this._height = canvas.height;
+    this._halfWidth = this._width/2;
+    this._halfHeight = this._height/2;
     this._lastRender = 0;
     this._data = [];
     this._imageLoader = new ImageLoader();
@@ -57,7 +61,7 @@ export class Renderer {
   render(timestamp) {
     let timeDiff = timestamp - this._lastRender;
     this._context.clearRect(0,0,this._width, this._height);
-    this.renderTerrain()
+    this.renderTerrain();
     for(let item of this._data) {
       this.renderItem(item);
     }
@@ -75,6 +79,10 @@ export class Renderer {
       case ItemClass.TANK:
         this.renderTank(item);
         break;
+      case ItemClass.AMMO:
+        this.renderAmmo(item);
+        break;
+
     }
     this._context.restore();
   }
@@ -87,16 +95,42 @@ export class Renderer {
     let h2 = h/3;
     let x = -w2/2;
     let y = -h2/2;
-    this._context.translate(this._width/2, this._height/2);
-    this._context.rotate(Math.atan2(tank.direction.x, tank.direction.y));
+    console.log("pos", tank.position.x, tank.position.y);
+    this._context.translate(this._halfWidth, this._halfHeight);
+    this._context.rotate(Math.atan2(tank.direction.y, tank.direction.x));
     this._context.drawImage(img, 0, 0, w, h, x, y, w2, h2);
   }
 
+  renderAmmo(ammo) {
+    if(!this.shouldRender(ammo)) return;
+    let img = this._imageLoader.getImage(ImageType.AMMO);
+    let w = img.width;
+    let h = img.height;
+    let w2 = w/2;
+    let h2 = h/2;
+    let x = -w2/2;
+    let y = -h2/2;
+    let translateX = ammo.position.x - this._positionReferrer.x + this._halfWidth;
+    let translateY = ammo.position.y - this._positionReferrer.y + this._halfHeight;
+    //console.log("pos", ammo.position.x, ammo.position.y);
+    //console.log("dir", ammo.direction.x, ammo.direction.y);
+    this._context.translate(translateX, translateY);
+    this._context.rotate(Math.atan2(ammo.direction.y, ammo.direction.x));
+    this._context.drawImage(img, 0, 0, w, h, x, y, w2, h2);
+  }
+
+  shouldRender(item) {
+    let refLen = Math.max(item.size.x, item.size.y)/2;
+    let diffX = Math.abs(this._positionReferrer.x - (item.position.x + refLen));
+    let diffY = Math.abs(this._positionReferrer.y - (item.position.y + refLen));
+    return diffX < this._halfWidth && diffY < this._halfHeight;
+  }
+
   renderTerrain() {
-    let topLeft = new Vector(-this._width/2, -this._height/2);
+    let topLeft = new Vector(-this._halfWidth, -this._halfHeight);
     let ref = this._positionReferrer.clone().floor();
     topLeft.add(ref);
-    let bottomRight = new Vector(this._width/2, this._height/2);
+    let bottomRight = new Vector(this._halfWidth, this._halfHeight);
     bottomRight.add(ref);
     let viewPort = this._terrain.getViewPort(topLeft, bottomRight);
 

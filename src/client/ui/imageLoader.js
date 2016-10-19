@@ -1,9 +1,11 @@
 export const ImageType = Object.freeze({
-  TANK: 0
+  TANK: 0,
+  AMMO: 1
 });
 
 const ImageMap = new Map([
-  [ImageType.TANK, "tank.png"]
+  [ImageType.TANK, "tank.png"],
+  [ImageType.AMMO, "ammo.png"]
 ]);
 
 let IMAGE_NUM = ImageMap.size;

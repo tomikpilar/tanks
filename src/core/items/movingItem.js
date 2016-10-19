@@ -16,7 +16,7 @@ export class MovingItem extends Item {
     this._speed = SPEED_THRESHOLD;
     this._direction = new Vector(1,0);
     this._acceleration = 1;
-    this._maxSpeed = 40;
+    this._maxSpeed = 30;
     this._className = ItemClass.MOVING_ITEM;
   }
 
@@ -60,10 +60,10 @@ export class MovingItem extends Item {
   }
 
   turnLeft() {
-    this.rotate(DEG);
+    this.rotate(-DEG);
   }
 
   turnRight() {
-    this.rotate(-DEG);
+    this.rotate(DEG);
   }
 }

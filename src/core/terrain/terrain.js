@@ -9,9 +9,8 @@ export class Terrain {
 
   getViewPort(topLeft, bottomRight) {
     var viewPort = [];
-    for(let i = topLeft.x; i < bottomRight.x; i++) {
-      var a = this._data[i].slice(topLeft.y, bottomRight.y)
-      viewPort.push(this._data[i].slice(topLeft.y, bottomRight.y));
+    for(let i = topLeft.y; i < bottomRight.y; i++) {
+      viewPort.push(this._data[i].slice(topLeft.x, bottomRight.x));
     }
     return viewPort;
   }

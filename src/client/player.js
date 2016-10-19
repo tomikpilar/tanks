@@ -30,7 +30,7 @@ export class Player {
       this._tank.turnRight();
     }
 
-    if(this._keyboardManager.isKeyPressed(KeyCode.CTRL)) {
+    if(this._keyboardManager.isKeyPressed(KeyCode.SPACE)) {
       let ammo = this._tank.shoot();
       this._pubSub.publish(TANK_SHOT, ammo);
     }
