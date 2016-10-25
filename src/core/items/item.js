@@ -6,12 +6,20 @@ export class Item {
   //_size;
   //_layer;
   //_className;
+  //_radius;
   
   constructor() {
     this._position = new Vector(0,0);
     this._size = new Vector(0,0);
+    this._radius = 0;
     this._className = ItemClass.ITEM;
   }
+  
+  initRadius() {
+    this._radius = Math.sqrt(Math.pow(this._size.x, 2) + Math.pow(this._size.y, 2));
+  }
+
+  get radius() { return this._radius; }
 
   update(timeDiff) {}
 

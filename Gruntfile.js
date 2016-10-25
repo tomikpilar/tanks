@@ -37,10 +37,19 @@ module.exports = function(grunt) {
         options: {
           baseUrl: 'out/client',
           name: 'client',
-          out: 'out/client/client.aio.js',
+          out: 'out/server/static/client/client.aio.js',
           optimize: 'none',
-          userStrict: true,
+          useStrict: true,
           insertRequire: ["client"]
+        }
+      },
+      serverApp: {
+        options: {
+          baseUrl: 'out/server',
+          name: 'serverApp',
+          out: 'out/server/serverApp.aio.js',
+          optimize: 'none',
+          useStrict: true
         }
       }
     },
@@ -49,7 +58,13 @@ module.exports = function(grunt) {
         expand: true,
         src: '**',
         cwd: 'src/static',
-        dest: 'out/static'
+        dest: 'out/server/static'
+      },
+      views: {
+        expand: true,
+        src: '**',
+        cwd: 'src/server/views',
+        dest: 'out/server/views'
       },
       requirejs: {
         expand: true,
@@ -57,6 +72,12 @@ module.exports = function(grunt) {
         src: ['src/**/*.js'],
         dest: 'out'
       },
+      server: {
+        expand: true,
+        cwd: 'src/server',
+        src: 'server.js',
+        dest: 'out/server'
+      }
     },
     clean: {
       main: 'out/*'

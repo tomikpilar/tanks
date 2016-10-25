@@ -15,6 +15,7 @@ export class Tanks {
   get terrain() { return this._terrain; }
 
   addItem(item) {
+    item.initRadius();
     this._items.push(item);
   }
 

@@ -55,4 +55,18 @@ export class Vector {
   clone() {
     return new Vector(this._x, this._y);
   }
+
+  static add2(a, b) {
+    return a.clone().add(b);
+  }
+
+  static dot2(a, b) {
+    return a.clone().dot(b);
+  }
+
+  static distance(a, b) {
+    let x = Math.abs(a.x - b.x);
+    let y = Math.abs(a.y - b.y);
+    return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+  }
 }

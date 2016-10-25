@@ -63,6 +63,7 @@ class Client {
 }
 
 (function() {
+  console.log("hello");
   let game = new Client();
 
   game.start();
