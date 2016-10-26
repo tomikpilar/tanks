@@ -13,12 +13,25 @@ export class MovingItem extends Item {
 
   constructor() {
     super();
-    this._speed = SPEED_THRESHOLD;
     this._direction = new Vector(1,0);
+    this._speed = SPEED_THRESHOLD;
     this._acceleration = 1;
     this._maxSpeed = 30;
     this._className = ItemClass.MOVING_ITEM;
+    this.updateCornerPoints();
   }
+  
+  // @override
+  updateCornerPoints() {
+    super.updateCornerPoints();
+    if(this._direction == undefined) return;
+    let angle = this._direction.angle(new Vector(1,0));
+    this._cornerPoints[0].rotate(angle);
+    this._cornerPoints[1].rotate(angle);
+    this._cornerPoints[2].rotate(angle);
+    this._cornerPoints[3].rotate(angle);
+  }
+  
 
   get speed() { return this._speed; }
   set speed(spd) { this._speed = spd; }
@@ -29,6 +42,7 @@ export class MovingItem extends Item {
   rotate(rad) {
     this._direction.rotate(rad);
     this._direction.normalize();
+    this.updateCornerPoints();
   }
 
   move(timeDiff) {

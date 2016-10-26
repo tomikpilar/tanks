@@ -7,19 +7,31 @@ export class Item {
   //_layer;
   //_className;
   //_radius;
+  //_cornerPoints;
   
   constructor() {
     this._position = new Vector(0,0);
     this._size = new Vector(0,0);
     this._radius = 0;
     this._className = ItemClass.ITEM;
+    this.updateCornerPoints();
   }
   
   initRadius() {
     this._radius = Math.sqrt(Math.pow(this._size.x, 2) + Math.pow(this._size.y, 2));
   }
 
+  updateCornerPoints() {
+    this._cornerPoints = [
+      (new Vector( this.size.x/2,  this.size.y/2)),
+      (new Vector( this.size.x/2, -this.size.y/2)),
+      (new Vector(-this.size.x/2,  this.size.y/2)),
+      (new Vector(-this.size.x/2, -this.size.y/2))
+    ]
+  }
+
   get radius() { return this._radius; }
+  get cornerPoints() { return this._cornerPoints; }
 
   update(timeDiff) {}
 

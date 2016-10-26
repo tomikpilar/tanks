@@ -8,9 +8,14 @@ export class Vector {
   }
 
   add(vec) {
-    this._x += vec._x;
-    this._y += vec._y;
+    this._x += vec.x;
+    this._y += vec.y;
     return this;
+  }
+
+  sub(vec) {
+    this._x -= vec.x;
+    this._y -= vec.y;
   }
 
   multiply(i) {
@@ -40,6 +45,10 @@ export class Vector {
     return this;
   }
 
+  angle(vec) {
+    return Math.acos(this.dot(vec)/(this.length()*vec.length()));
+  }
+
   floor() {
     this._x = ~~(this._x);
     this._y = ~~(this._y);
@@ -60,8 +69,16 @@ export class Vector {
     return a.clone().add(b);
   }
 
+  static sub2(a, b) {
+    return a.clone().sub(b);
+  }
+
   static dot2(a, b) {
     return a.clone().dot(b);
+  }
+
+  static angle2(a, b) {
+    return a.angle(b);
   }
 
   static distance(a, b) {

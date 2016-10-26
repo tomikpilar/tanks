@@ -8,8 +8,8 @@ export class CollisionDetector {
   static detectItemToItem(a, b) {
     if(a.radius + b.radius < Vector.distance(a.position, b.position)) return false;
 
-    let pointsA = CollisionDetector.getRectanglePoints(a);
-    let pointsB = CollisionDetector.getRectanglePoints(b);
+    let pointsA = a.cornerPoints;
+    let pointsB = b.cornerPoints;
 
     let axisA = a.direction.clone();
     if(!CollisionDetector.detectProjectionCollision(axisA, pointsA, pointsB)) return false;
@@ -29,16 +29,7 @@ export class CollisionDetector {
   static detectItemToTerrain(a, terrain) {
     
   }
-
-  static getRectanglePoints(a) {
-    let res = [];
-    res.push(new Vector(a.position.x + a.size.x/2, a.position.y + a.size.y/2));
-    res.push(new Vector(a.position.x + a.size.x/2, a.position.y - a.size.y/2));
-    res.push(new Vector(a.position.x - a.size.x/2, a.position.y + a.size.y/2));
-    res.push(new Vector(a.position.x - a.size.x/2, a.position.y - a.size.y/2));
-    return res;
-  }
-
+  
   static detectProjectionCollision(axis, pointsA, pointsB) {
     let minA, maxA, minB, maxB;
 
