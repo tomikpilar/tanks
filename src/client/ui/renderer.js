@@ -95,7 +95,6 @@ export class Renderer {
     let h2 = h/3;
     let x = -w2/2;
     let y = -h2/2;
-    console.log("pos", tank.position.x, tank.position.y);
     this._context.translate(this._halfWidth, this._halfHeight);
     this._context.rotate(Math.atan2(tank.direction.y, tank.direction.x));
     this._context.drawImage(img, 0, 0, w, h, x, y, w2, h2);
@@ -112,8 +111,6 @@ export class Renderer {
     let y = -h2/2;
     let translateX = ammo.position.x - this._positionReferrer.x + this._halfWidth;
     let translateY = ammo.position.y - this._positionReferrer.y + this._halfHeight;
-    //console.log("pos", ammo.position.x, ammo.position.y);
-    //console.log("dir", ammo.direction.x, ammo.direction.y);
     this._context.translate(translateX, translateY);
     this._context.rotate(Math.atan2(ammo.direction.y, ammo.direction.x));
     this._context.drawImage(img, 0, 0, w, h, x, y, w2, h2);
@@ -143,23 +140,32 @@ export class Renderer {
       for(let j = 0; j < y; j++) {
         let offset = 4*(i*y + j);
         switch (viewPort[i][j]) {
+          case TerrainType.OUT:
+            Renderer.putPointData(imageData, offset, 0, 0, 0, 255);
+            break;
           case TerrainType.ROCKS:
-            imageData.data[offset    ] = ROCK_COLOR[0] + (topLeft.x + i + bottomRight.x + j)%10;
-            imageData.data[offset + 1] = ROCK_COLOR[1] + (topLeft.x + i - bottomRight.x - j)%10;
-            imageData.data[offset + 2] = ROCK_COLOR[2] - (topLeft.x + i + bottomRight.x + j)%10;
-            imageData.data[offset + 3] = ROCK_COLOR[3];
+            Renderer.putPointData(imageData, offset,
+              ROCK_COLOR[0] + (topLeft.x + i + topLeft.y + j)%10,
+              ROCK_COLOR[1] + (topLeft.x + i - topLeft.y + j)%10,
+              ROCK_COLOR[2] - (topLeft.x + i + topLeft.y + j)%10,
+              ROCK_COLOR[3]
+            );
             break;
           case TerrainType.HOME:
-            imageData.data[offset    ] = 99;
-            imageData.data[offset + 1] = 99;
-            imageData.data[offset + 2] = 99;
-            imageData.data[offset + 3] = 255;
+            Renderer.putPointData(imageData, offset, 99, 99, 99, 255);
             break;
         }
       }
     }
 
     this._context.putImageData(imageData, 0, 0);
+  }
+
+  static putPointData(imageData, offset, r, g, b, alpha) {
+    imageData.data[offset    ] = r;
+    imageData.data[offset + 1] = g;
+    imageData.data[offset + 2] = b;
+    imageData.data[offset + 3] = alpha;
   }
 
 }

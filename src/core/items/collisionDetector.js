@@ -1,4 +1,5 @@
 import {Vector} from "../math/vector";
+import {TerrainType} from "../terrain/terrainType";
 
 export class CollisionDetector {
   constructor() {
@@ -27,7 +28,14 @@ export class CollisionDetector {
   }
 
   static detectItemToTerrain(a, terrain) {
-    
+    let pointGen = CollisionDetector.getCheckPointsGenerator(a);
+    let pos;
+    while(!(pos = pointGen.next()).done) {
+      let t = terrain.getPointType(pos.value);
+      if (t == TerrainType.ROCKS) return true;
+    }
+
+    return false;
   }
   
   static detectProjectionCollision(axis, pointsA, pointsB) {
@@ -55,5 +63,21 @@ export class CollisionDetector {
 
   static projectionScalar(projection, axis) {
     return Vector.dot2(projection, axis);
+  }
+
+  static getCheckPointsGenerator(a) {
+    let cornerPoints = a.cornerPoints;
+    let i = 0;
+    return {
+      next: function () {
+        if(i < 4) {
+          return {value: cornerPoints[i++], done: false};
+        }
+
+
+
+        return {value: null, done: true};
+      }
+    }
   }
 }
