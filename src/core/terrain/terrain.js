@@ -27,4 +27,9 @@ export class Terrain {
   getPointType(vec) {
     return this._data[vec.y + this._offset.y][vec.x + this._offset.x];
   }
+
+  setPointType(vec, type) {
+    if(this._data[vec.y + this._offset.y][vec.x + this._offset.x] == TerrainType.HOME) return;
+    this._data[vec.y + this._offset.y][vec.x + this._offset.x] = type;
+  }
 }

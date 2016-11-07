@@ -11,8 +11,8 @@ export class CollisionDetector {
 
     let pointsA = a.cornerPoints;
     let pointsB = b.cornerPoints;
-
     let axisA = a.direction.clone();
+
     if(!CollisionDetector.detectProjectionCollision(axisA, pointsA, pointsB)) return false;
 
     axisA.rotate(Math.PI/2);
@@ -32,6 +32,7 @@ export class CollisionDetector {
     let pos;
     while(!(pos = pointGen.next()).done) {
       let t = terrain.getPointType(pos.value);
+      console.log(pos.value, t);
       if (t == TerrainType.ROCKS) return true;
     }
 

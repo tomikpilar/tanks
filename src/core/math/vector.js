@@ -16,6 +16,7 @@ export class Vector {
   sub(vec) {
     this._x -= vec.x;
     this._y -= vec.y;
+    return this;
   }
 
   multiply(i) {
@@ -85,5 +86,17 @@ export class Vector {
     let x = Math.abs(a.x - b.x);
     let y = Math.abs(a.y - b.y);
     return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+  }
+
+  static ringIterate(center, radius, process) {
+    let ref = Vector.sub2(center, new Vector(radius, radius)).floor();
+    let xEnd = ref.x + 2*radius;
+    let yEnd = ref.y + 2*radius;
+    for(;ref.x < xEnd; ref.x++) {
+      for(;ref.y < yEnd; ref.y++) {
+        if(Vector.distance(ref, center) < radius) process(ref);
+      }
+      ref.y -= 2*radius;
+    }
   }
 }

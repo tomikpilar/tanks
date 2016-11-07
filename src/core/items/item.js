@@ -8,12 +8,14 @@ export class Item {
   //_className;
   //_radius;
   //_cornerPoints;
+  //_health
   
   constructor() {
     this._position = new Vector(0,0);
     this._size = new Vector(0,0);
     this._radius = 0;
     this._className = ItemClass.ITEM;
+    this._health = 1;
     this.updateCornerPoints();
   }
   
@@ -23,15 +25,22 @@ export class Item {
 
   updateCornerPoints() {
     this._cornerPoints = [
-      (new Vector( this.size.x/2,  this.size.y/2)),
-      (new Vector( this.size.x/2, -this.size.y/2)),
-      (new Vector(-this.size.x/2,  this.size.y/2)),
-      (new Vector(-this.size.x/2, -this.size.y/2))
+      (new Vector( this._size.x/2,  this._size.y/2)),
+      (new Vector( this._size.x/2, -this._size.y/2)),
+      (new Vector(-this._size.x/2,  this._size.y/2)),
+      (new Vector(-this._size.x/2, -this._size.y/2))
     ]
   }
 
   get radius() { return this._radius; }
-  get cornerPoints() { return this._cornerPoints; }
+  get cornerPoints() {
+    return [
+      Vector.add2(this._cornerPoints[0], this._position).floor(),
+      Vector.add2(this._cornerPoints[1], this._position).floor(),
+      Vector.add2(this._cornerPoints[2], this._position).floor(),
+      Vector.add2(this._cornerPoints[3], this._position).floor()
+    ];
+  }
 
   update(timeDiff) {}
 

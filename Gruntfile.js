@@ -1,3 +1,5 @@
+var defaultTaskOrder = ['clean', 'babel', 'copy', 'requirejs', 'run:server'];
+
 module.exports = function(grunt) {
   require('jit-grunt')(grunt);
 
@@ -19,7 +21,7 @@ module.exports = function(grunt) {
         ]
       }
     },
-    requirejs: {
+    requirejs_bower: {
       expand: true,
       cwd: 'bower_components/requirejs',
       src: ['src/**/*.js'],
@@ -81,8 +83,30 @@ module.exports = function(grunt) {
     },
     clean: {
       main: 'out/*'
+    },
+    run: {
+      server: {
+        cmd: "node",
+        args: ["server.js"],
+        options: {
+          cwd: "out/server",
+          wait: false
+        }
+      }
+    },
+    watch: {
+      scripts: {
+        files: "src/**/*.js",
+        tasks: ['stop:server'].concat(defaultTaskOrder),
+        options: {
+          events: ['all'],
+          spawn: false
+        }
+      }
     }
   });
 
-  grunt.registerTask('default', ['clean', 'babel', 'copy', 'requirejs']);
+  grunt.loadNpmTasks('grunt-run');
+
+  grunt.registerTask('default', defaultTaskOrder.concat(['watch']));
 };

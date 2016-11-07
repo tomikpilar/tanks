@@ -9,15 +9,23 @@ export class MovingItem extends Item {
   //_speed;
   //_direction;
   //_acceleration;
+  //_rotation;
   //_maxSpeed;
+  //_lastState;
 
   constructor() {
     super();
     this._direction = new Vector(1,0);
     this._speed = SPEED_THRESHOLD;
     this._acceleration = 1;
+    this._rotation = 0;
     this._maxSpeed = 30;
     this._className = ItemClass.MOVING_ITEM;
+    this._lastState = {
+      speed: this._speed,
+      position: this._position,
+      direction: this._direction
+    };
     this.updateCornerPoints();
   }
   
@@ -46,6 +54,11 @@ export class MovingItem extends Item {
   }
 
   move(timeDiff) {
+    this.setLastState();
+    if(this._rotation != 0)  {
+      this.rotate(this._rotation * DEG);
+      this._rotation = 0;
+    }
     this._speed *= this._acceleration;
     if(this._speed > this._maxSpeed) this._speed = this._maxSpeed;
     let speed = this._speed;
@@ -74,10 +87,22 @@ export class MovingItem extends Item {
   }
 
   turnLeft() {
-    this.rotate(-DEG);
+    this._rotation = -1;
   }
 
   turnRight() {
-    this.rotate(DEG);
+    this._rotation = 1;
+  }
+
+  setLastState() {
+    this._lastState = {
+      position: this._position.clone(),
+      direction: this._direction.clone()
+    }
+  }
+
+  reloadLastState() {
+    this._direction = this._lastState.direction;
+    this._position = this._lastState.position;
   }
 }

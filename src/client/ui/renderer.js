@@ -6,6 +6,8 @@ import {ImageLoader, ImageType} from "./imageLoader";
 
 
 const ROCK_COLOR = [79, 59, 49, 255];
+const HOME_COLOR = [99, 99, 99, 255];
+const PLAIN_COLOR = [110, 110, 110, 255];
 
 export class Renderer {
   //_context;
@@ -152,7 +154,10 @@ export class Renderer {
             );
             break;
           case TerrainType.HOME:
-            Renderer.putPointData(imageData, offset, 99, 99, 99, 255);
+            Renderer.putPointData(imageData, offset, HOME_COLOR[0], HOME_COLOR[1], HOME_COLOR[2], HOME_COLOR[3]);
+            break;
+          case TerrainType.PLAIN:
+            Renderer.putPointData(imageData, offset, PLAIN_COLOR[0], PLAIN_COLOR[1], PLAIN_COLOR[2], PLAIN_COLOR[3]);
             break;
         }
       }
